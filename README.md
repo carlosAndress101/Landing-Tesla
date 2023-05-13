@@ -53,3 +53,7 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+#
+![solar roof](https://github.com/carlosAndress101/Landing-Tesla/assets/63275338/7e03650f-963c-4b8f-aab2-8ad82553bb91)
+#
+![model y](https://github.com/carlosAndress101/Landing-Tesla/assets/63275338/828478e3-173a-40c7-9d2e-fd89241f54b3)
