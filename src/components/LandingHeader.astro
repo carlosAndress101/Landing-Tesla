@@ -1,94 +1,163 @@
 ---
-import Logo from "./Logo.astro";
+import { PRIMARY_NAV, SECONDARY_NAV } from "../utils/constants";
+
+const linkBase =
+  "inline-block px-4 py-4 text-sm font-medium tracking-tighter transition-colors duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded";
 ---
 
 <header
-    id="landing-header"
-      class="py-3 px-10 flex items-center fixed top-0 w-full justify-between z-40"
-    >
-      <div class="flex flex-grow basis-0 text-current">
-        <Logo/>
-      </div>
+  id="landing-header"
+  class="fixed top-0 z-40 flex w-full items-center justify-between px-6 py-3 text-white backdrop-blur-[2px] transition-colors duration-250 md:px-10"
+  role="banner"
+>
+  <a
+    href="#hero"
+    aria-label="Tesla Home"
+    class="flex basis-0 flex-grow text-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current rounded"
+  >
+    <svg class="h-6 w-28" viewBox="0 0 342 35" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path
+      d="M0 .1a9.7 9.7 0 0 0 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 0 7-7H0zm238.6 0h-6.8v34.8H263a9.7 9.7 0 0 0 6-6.8h-30.3V0zm-52.3 6.8c3.6-1 6.6-3.8 7.4-6.9l-38.1.1v20.6h31.1v7.2h-24.4a13.6 13.6 0 0 0-8.7 7h39.9v-21h-31.2v-7h24zm116.2 28h6.7v-14h24.6v14h6.7v-21h-38zM85.3 7h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zm0 13.8h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zm0 14.1h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zM308.5 7h26a9.6 9.6 0 0 0 7-7h-40a9.6 9.6 0 0 0 7 7z"
+      fill="currentColor"/></svg>
+  </a>
 
-      <nav>
-        <ul
-          class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-500 [&>li>a]:text-current [&>li>a]:tracking-tighter [&>li>a]:font-medium [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-4"
-        >
-          <li><a href="#">Model S</a></li>
-          <li><a href="#">Model 3</a></li>
-          <li><a href="#">Model X</a></li>
-          <li><a href="#">Model Y</a></li>
-          <li><a href="#">Solar Roof</a></li>
-          <li><a href="#">Solar Panels</a></li>
-          <li><a href="#">Powerwall</a></li>
-        </ul>
-      </nav>
+  <nav aria-label="Primary" class="hidden lg:block">
+    <ul class="flex text-sm">
+      {PRIMARY_NAV.map((l) => <li><a class={linkBase} href="#">{l}</a></li>)}
+    </ul>
+  </nav>
 
-      <nav class="flex flex-grow justify-end basis-0">
-        <ul
-          class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-500 [&>li>a]:text-current [&>li>a]:tracking-tighter [&>li>a]:font-medium [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-4"
-        >
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">Account</a></li>
-          <li><a href="#">Menu</a></li>
-        </ul>
-      </nav>
+  <nav aria-label="Secondary" class="hidden lg:flex basis-0 flex-grow justify-end">
+    <ul class="flex text-sm">
+      {SECONDARY_NAV.map((l) => (
+        <li>
+          {l === "Menu" ? (
+            <button id="menu-btn" class={linkBase} aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="dialog">
+              {l}
+            </button>
+          ) : (
+            <a class={linkBase} href="#">{l}</a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
 
-      <div id="menu-backdrop" class={`
-        absolute bg-black/5 backdrop-blur-lg rounded
-        translate-x-[var(--left)] translate-y-[var(--top)]
-        left-0 top-0
-        w-[var(--width)] h-[var(--height)]
-        transition-all duration-500
-        ease-in-out opacity-0 -z-10
-      `}></div>
-    </header>
+  <button
+    id="menu-btn-mobile"
+    class="inline-flex items-center justify-center rounded bg-black/10 px-3 py-2 text-sm font-medium text-current backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current lg:hidden"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+    aria-label="Open menu"
+  >
+    Menu
+  </button>
 
-    <script>
-      const listItems = document.querySelectorAll("#landing-header li")
-      const menuBackDrop = document.querySelector("#menu-backdrop") as HTMLElement
+  <div
+    id="menu-backdrop"
+    class="absolute left-0 top-0 -z-10 h-[var(--h,0px)] w-[var(--w,0px)] translate-x-[var(--x,0px)] translate-y-[var(--y,0px)] rounded bg-black/5 backdrop-blur-lg opacity-0 transition-all duration-300 ease-out"
+    aria-hidden="true"
+  ></div>
+</header>
 
-      listItems.forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-      const { left, top, width, height } = item.getBoundingClientRect()
+<div id="mobile-menu" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-label="Menu">
+  <div id="mobile-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+  <div
+    id="mobile-panel"
+    class="absolute right-0 top-0 h-full w-[85%] max-w-sm translate-x-full bg-white p-6 shadow-2xl transition-transform duration-300 ease-out"
+  >
+    <div class="flex justify-end">
+      <button
+        id="menu-close"
+        class="rounded p-2 text-neutral-600 hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+        aria-label="Close menu"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </div>
+    <nav aria-label="Mobile">
+      <ul class="mt-8 flex flex-col divide-y divide-neutral-100 text-[15px]">
+        {[...PRIMARY_NAV, ...SECONDARY_NAV.filter((l) => l !== "Menu")].map((item) => (
+          <li><a href="#" class="flex rounded px-2 py-4 font-medium text-[#171a20] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black">{item}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</div>
 
-      menuBackDrop.style.setProperty("--left", `${left}px`)
-      menuBackDrop.style.setProperty("--top", `${top}px`)
-      menuBackDrop.style.setProperty("--width", `${width}px`)
-      menuBackDrop.style.setProperty("--height", `${height}px`)
+<script>
+  const header = document.getElementById("landing-header") as HTMLElement | null;
+  const backdrop = document.getElementById("menu-backdrop") as HTMLElement | null;
+  const items = document.querySelectorAll<HTMLLIElement>("#landing-header li");
+  const menuBtn = document.getElementById("menu-btn") as HTMLButtonElement | null;
+  const menuBtnMobile = document.getElementById("menu-btn-mobile") as HTMLButtonElement | null;
+  const mobileMenu = document.getElementById("mobile-menu") as HTMLElement | null;
+  const mobileOverlay = document.getElementById("mobile-overlay") as HTMLElement | null;
+  const mobilePanel = document.getElementById("mobile-panel") as HTMLElement | null;
+  const menuClose = document.getElementById("menu-close") as HTMLButtonElement | null;
 
-      menuBackDrop.style.opacity = "1"
-      menuBackDrop.style.visibility = "visible"
-    })
+  items.forEach((item: HTMLLIElement) => {
+    item.addEventListener("mouseenter", (): void => {
+      const { left, top, width, height } = item.getBoundingClientRect();
+      if (!backdrop) return;
+      backdrop.style.setProperty("--x", `${left}px`);
+      backdrop.style.setProperty("--y", `${top}px`);
+      backdrop.style.setProperty("--w", `${width}px`);
+      backdrop.style.setProperty("--h", `${height}px`);
+      backdrop.style.opacity = "1";
+    });
+    item.addEventListener("mouseleave", (): void => {
+      if (!backdrop) return;
+      backdrop.style.opacity = "0";
+    });
+  });
 
-    item.addEventListener("mouseleave", () => {
-      menuBackDrop.style.opacity = "0"
-      menuBackDrop.style.visibility = "hidden"
-    })
-  })
-    </script>
+  const observer = new IntersectionObserver(
+    (entries: IntersectionObserverEntry[]): void => {
+      entries.forEach((entry: IntersectionObserverEntry): void => {
+        if (entry.isIntersecting) {
+          const theme = (entry.target as HTMLElement).getAttribute("data-theme") as import("../types/theme").Theme | null;
+          if (!header || !theme) return;
+          // Typed Record lookup — no magic strings
+          const colorMap: Record<import("../types/theme").Theme, string> = { light: "#171a20", dark: "white" };
+          header.style.color = colorMap[theme];
+          header.classList.toggle("bg-white/0", theme === "dark");
+          header.classList.toggle("bg-white/70", theme === "light");
+        }
+      });
+    },
+    { threshold: 0.9 },
+  );
 
-    <script>
-      /**changing color depending the section*/
-      const header = document.querySelector("#landing-header") as HTMLElement;
+  document.querySelectorAll<HTMLElement>("section[data-theme]").forEach((s: HTMLElement): void => observer.observe(s));
 
-      const observerOptions = {
-        root: null,
-        rootMarging: '0px',
-        threshold:0.90
+  let open = false as boolean;
+  function setOpen(v: boolean): void {
+    open = v;
+    if (!mobileMenu || !mobileOverlay || !mobilePanel) return;
+    mobileMenu.classList.toggle("hidden", !open);
+    requestAnimationFrame((): void => {
+      if (open) {
+        mobileOverlay.style.opacity = "1";
+        mobilePanel.style.transform = "translateX(0)";
+        document.body.style.overflow = "hidden";
+      } else {
+        mobileOverlay.style.opacity = "0";
+        mobilePanel.style.transform = "translateX(100%)";
+        document.body.style.overflow = "";
       }
+    });
+    ([menuBtn, menuBtnMobile] as const).forEach((b) => b?.setAttribute("aria-expanded", String(open)));
+  }
 
+  function closeMenu(): void {
+    if (open) setOpen(false);
+  }
 
-      const observer = new IntersectionObserver(entries =>{
-        entries.forEach(entry => {
-          const { isIntersecting } = entry
-          if( isIntersecting){
-            const color = entry.target.getAttribute("data-header-color")
-            header.style.color = color;
-          }
-        })
-      }, observerOptions)
-
-      const sections = document.querySelectorAll(".landing-section")
-      sections.forEach((section) => observer.observe(section))
-    </script>
+  menuBtn?.addEventListener("click", (): void => setOpen(!open));
+  menuBtnMobile?.addEventListener("click", (): void => setOpen(!open));
+  menuClose?.addEventListener("click", (): void => closeMenu());
+  mobileOverlay?.addEventListener("click", (): void => closeMenu());
+  document.addEventListener("keydown", (e: KeyboardEvent): void => {
+    if (e.key === "Escape") closeMenu();
+  });
+</script>

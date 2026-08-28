@@ -1,0 +1,13 @@
+/* landing snap + subtle parallax container */
+.snap-y { scroll-padding-top: 0; }
+
+/* indicator active is handled via JS class toggle */
+.indicator[aria-current="true"] {
+  background: #171a20;
+  height: 1.5rem;
+}
+
+/* scroll arrow bounce respects reduced motion via global.css */
+@media (prefers-reduced-motion: reduce) {
+  .animate-bounce { animation: none; }
+}

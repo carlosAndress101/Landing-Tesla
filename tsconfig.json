@@ -1,3 +1,18 @@
 {
-  "extends": "astro/tsconfigs/base"
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    // === Premium Astro 7.2 — strictest ya incluye strict + noUncheckedIndexedAccess + exactOptionalPropertyTypes etc ===
+    // Adicional moderno TS 5.9
+    "moduleDetection": "auto",
+
+    // DX / Paths — sincronizado con astro.config.mjs vite.resolve.alias
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "~/assets/*": ["src/assets/*"]
+    }
+  },
+  // Astro 7 genera .astro/types.d.ts — incluir junto a src
+  "include": ["src", ".astro/types.d.ts"],
+  "exclude": ["dist", "node_modules"]
 }

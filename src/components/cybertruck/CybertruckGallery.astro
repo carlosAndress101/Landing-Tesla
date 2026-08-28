@@ -1,0 +1,45 @@
+---
+import type { CybertruckGalleryItem } from "../../types/cybertruck";
+
+interface Props {
+  readonly items: readonly CybertruckGalleryItem[];
+}
+const { items }: Props = Astro.props;
+
+const aspectMap: Record<string, string> = {
+  "16/9": "aspect-[16/9]",
+  "4/3": "aspect-[4/3]",
+  "1/1": "aspect-square",
+  "21/9": "aspect-[21/9]",
+};
+---
+
+<section id="cybertruck-gallery" data-theme="light" class="landing-section snap-center relative w-screen bg-white px-4 py-12 md:px-8 md:py-16">
+  <div class="mx-auto max-w-7xl">
+    <header class="reveal mb-8 text-center">
+      <h2 class="text-3xl font-bold tracking-tight md:text-5xl">Galería cinematográfica</h2>
+      <p class="mt-2 text-sm opacity-60">Diseño anguloso · función pura</p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {items.map((item, i) => (
+        <figure class:list={["reveal group relative overflow-hidden rounded-xl bg-neutral-100", aspectMap[item.aspect ?? "16/9"]]} style={`transition-delay:${i * 80}ms`}>
+          <img
+            src={item.src}
+            alt={item.alt}
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            loading="lazy"
+            decoding="async"
+            width="960"
+            height="540"
+          />
+          {item.caption && (
+            <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-left text-sm font-medium text-white">
+              {item.caption}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

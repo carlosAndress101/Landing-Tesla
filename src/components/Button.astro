@@ -1,0 +1,21 @@
+---
+import type { ButtonProps, ButtonVariant } from "../types/button";
+
+interface Props extends ButtonProps {}
+
+const { label, href, variant = "primary", id }: Props = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center px-8 py-2.5 text-sm font-medium rounded-md border-[3px] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black hover:scale-[1.02] hover:shadow-md min-w-[16rem]";
+
+// Record<ButtonVariant, string> — strict mapping, no missing variant
+const variants: Record<ButtonVariant, string> = {
+  primary: "bg-[#171A20] text-white border-transparent hover:bg-black focus-visible:ring-[#171A20]",
+  secondary: "bg-white/80 backdrop-blur text-[#393c41] border-transparent hover:bg-white focus-visible:ring-neutral-400",
+  ghost: "bg-white/5 backdrop-blur-sm border-white text-white hover:bg-white hover:text-black focus-visible:ring-white",
+} satisfies Record<ButtonVariant, string>;
+---
+
+<a id={id} href={href} class:list={[base, variants[variant]]}>
+  {label}
+</a>

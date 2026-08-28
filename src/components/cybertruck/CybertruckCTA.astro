@@ -1,0 +1,22 @@
+---
+import Button from "../Button.astro";
+import type { CybertruckCTAData } from "../../types/cybertruck";
+
+interface Props extends CybertruckCTAData {}
+const { id, title, subtitle, theme, media, actions }: Props = Astro.props;
+---
+
+<section id={id} data-theme={theme} class="landing-section snap-center relative flex h-[100svh] w-screen flex-col items-center overflow-hidden bg-black text-white">
+  <div class="absolute inset-0 z-0">
+    <img src={media.src} alt={media.alt} class="h-full w-full object-cover object-center" loading="lazy" decoding="async" width="1920" height="1080" />
+    <div class="absolute inset-0 bg-black/60"></div>
+  </div>
+
+  <div class="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 text-center">
+    <h2 class="reveal max-w-4xl text-4xl font-black tracking-[-0.03em] md:text-6xl">{title}</h2>
+    <p class="reveal mt-4 text-sm opacity-80 md:text-base" style="transition-delay:80ms">{subtitle}</p>
+    <div class="reveal mt-8 flex flex-col gap-3 md:flex-row md:gap-6" style="transition-delay:150ms">
+      {actions.map((a) => <Button label={a.label} href={a.href} variant={a.variant} />)}
+    </div>
+  </div>
+</section>
