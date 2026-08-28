@@ -1,0 +1,24 @@
+---
+import type { CybertruckStat } from "../../types/cybertruck";
+
+interface Props {
+  readonly stats: readonly CybertruckStat[];
+}
+const { stats }: Props = Astro.props;
+---
+
+<section id="cybertruck-stats" data-theme="dark" class="landing-section snap-center relative flex w-screen flex-col items-center justify-center bg-[#0a0a0a] px-6 py-16 text-white md:py-24">
+  <div class="reveal mx-auto grid w-full max-w-6xl grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
+    {stats.map((s) => (
+      <div class="flex flex-col items-center text-center">
+        <div class="text-3xl font-bold tracking-tighter md:text-4xl">{s.value}</div>
+        <div class="mt-2 text-sm font-medium uppercase tracking-widest opacity-80">{s.label}</div>
+        {s.sublabel && <div class="mt-1 text-xs opacity-60">{s.sublabel}</div>}
+        {s.note && <div class="mt-1 text-[10px] opacity-40">{s.note}</div>}
+      </div>
+    ))}
+  </div>
+  <p class="reveal mt-10 max-w-3xl text-center text-xs opacity-40" style="transition-delay:150ms">
+    *Especificaciones según configuración. Autonomía EPA est. No WLTP. Consulta tesla.com/es_co/cybertruck para datos actualizados.
+  </p>
+</section>

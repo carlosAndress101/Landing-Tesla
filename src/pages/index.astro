@@ -1,44 +1,139 @@
 ---
-import EndSection from "../components/EndSeccion.astro";
-import ChargeSection5 from "../components/ChangeSeccion5.astro";
-import ChargeSection4 from "../components/ChangeSeccion4.astro";
-import ChargeSection3 from "../components/ChangeSeccion3.astro";
-import ChargeSection2 from "../components/ChangeSeccion2.astro";
-import ChargeSection1 from "../components/ChargeSection.astro";
-import ChargeSection from "../components/ChangeSeccion1.astro";
-import HeroSection from "../components/HeroSection.astro";
-import LandingHeader from "../components/LandingHeader.astro";
 import Layout from "../layouts/Layout.astro";
+import LandingHeader from "../components/LandingHeader.astro";
+import Section from "../components/Section.astro";
+import Footer from "../components/Footer.astro";
+import { sections } from "../data/sections";
+import type { TeslaSection } from "../types/section";
+
+// Cybertruck
+import CybertruckHero from "../components/cybertruck/CybertruckHero.astro";
+import CybertruckStats from "../components/cybertruck/CybertruckStats.astro";
+import CybertruckGallery from "../components/cybertruck/CybertruckGallery.astro";
+import CybertruckFeatures from "../components/cybertruck/CybertruckFeatures.astro";
+import CybertruckInterior from "../components/cybertruck/CybertruckInterior.astro";
+import CybertruckUtility from "../components/cybertruck/CybertruckUtility.astro";
+import CybertruckPower from "../components/cybertruck/CybertruckPower.astro";
+import CybertruckOffroad from "../components/cybertruck/CybertruckOffroad.astro";
+import CybertruckSpecs from "../components/cybertruck/CybertruckSpecs.astro";
+import CybertruckCTA from "../components/cybertruck/CybertruckCTA.astro";
+import {
+  cybertruckHero,
+  cybertruckStats,
+  cybertruckGallery,
+  cybertruckFeatures,
+  cybertruckInterior,
+  cybertruckPowerFlows,
+  cybertruckOffroad,
+  cybertruckSpecs,
+  cybertruckCTA,
+} from "../data/cybertruck";
 ---
 
-<Layout title="Welcome to Astro.">
-  <!-- header  -->
-  <LandingHeader/>
-  <main class="snap-y snap-mandatory relative w-full h-screen overflow-auto">
-   <div class="snap-center">
-    <HeroSection/>
-   </div>
-   <div class="snap-center">
-    <ChargeSection/>
-   </div>
-   <div class="snap-center">
-    <ChargeSection1/>
-   </div>
-   <div class="snap-center">
-    <ChargeSection2/>
-   </div>
-   <div class="snap-center">
-    <ChargeSection3/>
-   </div>
-   <div class="snap-center">
-    <ChargeSection4/>
-   </div>
-   <div class="snap-center">
-    <ChargeSection5/>
-   </div>
-   <div class="snap-center">
-    <EndSection/>
-   </div>
+<Layout title="Tesla — Cybertruck + Electric Cars, Solar & Clean Energy">
+  <LandingHeader />
 
+  <main id="main-content" class="snap-y snap-mandatory h-screen w-full overflow-y-auto scroll-smooth">
+    {sections.map((s: TeslaSection, i: number) => <Section {...s} eager={i === 0} />)}
+    <!-- CYBERTRUCK EXPERIENCE -->
+    <CybertruckHero {...cybertruckHero} />
+    <CybertruckStats stats={cybertruckStats} />
+    <CybertruckGallery items={cybertruckGallery} />
+    <CybertruckFeatures features={cybertruckFeatures} />
+    <CybertruckInterior items={cybertruckInterior} />
+    <CybertruckUtility />
+    <CybertruckPower flows={cybertruckPowerFlows} />
+    <CybertruckOffroad title={cybertruckOffroad.title} subtitle={cybertruckOffroad.subtitle} media={cybertruckOffroad.media} />
+    <CybertruckSpecs specs={cybertruckSpecs} />
+    <CybertruckCTA {...cybertruckCTA} />
+    <div class="snap-center">
+      <Footer />
+    </div>
   </main>
+
+  <nav aria-label="Section navigation" class="fixed right-4 top-1/2 z-30 hidden -translate-y-1/2 md:block">
+    <ul class="flex flex-col gap-3">
+      {sections.map((s: TeslaSection) => (
+        <li>
+          <a
+            href={`#${s.id}`}
+            aria-label={`Go to ${s.title}`}
+            data-indicator={s.id}
+            class="indicator block h-2 w-2 rounded-full bg-neutral-400 transition-all duration-300 hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+          />
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div id="loader" class="fixed inset-0 z-[60] grid place-items-center bg-white transition-opacity duration-500">
+    <svg class="h-6 w-28 animate-pulse text-black" viewBox="0 0 342 35" fill="currentColor" aria-hidden="true">
+      <path
+        d="M0 .1a9.7 9.7 0 0 0 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 0 7-7H0zm238.6 0h-6.8v34.8H263a9.7 9.7 0 0 0 6-6.8h-30.3V0zm-52.3 6.8c3.6-1 6.6-3.8 7.4-6.9l-38.1.1v20.6h31.1v7.2h-24.4a13.6 13.6 0 0 0-8.7 7h39.9v-21h-31.2v-7h24zm116.2 28h6.7v-14h24.6v14h6.7v-21h-38zM85.3 7h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zm0 13.8h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zm0 14.1h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zM308.5 7h26a9.6 9.6 0 0 0 7-7h-40a9.6 9.6 0 0 0 7 7z"
+      />
+    </svg>
+  </div>
+
+  <script>
+    const loader = document.getElementById("loader") as HTMLElement | null;
+    window.addEventListener("load", (): void => {
+      window.setTimeout((): void => {
+        if (!loader) return;
+        loader.style.opacity = "0";
+        loader.style.pointerEvents = "none";
+        window.setTimeout((): void => loader.remove(), 600);
+      }, 500);
+    });
+
+    const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+    const ro = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]): void => {
+        entries.forEach((e: IntersectionObserverEntry): void => {
+          if (e.isIntersecting) e.target.classList.add("is-visible");
+        });
+      },
+      { threshold: 0.2 },
+    );
+    reveals.forEach((el: HTMLElement): void => ro.observe(el));
+
+    const media = document.querySelectorAll<HTMLElement>(".parallax-media");
+    const reduce: boolean = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) {
+      const main = document.getElementById("main-content") as HTMLElement | null;
+      main?.addEventListener(
+        "scroll",
+        (): void => {
+          if (!main) return;
+          const scrolled: number = main.scrollTop;
+          media.forEach((el: HTMLElement, i: number): void => {
+            const offset: number = (scrolled - i * window.innerHeight) * 0.04;
+            const clamped: number = Math.max(-20, Math.min(20, offset));
+            el.style.transform = `translateY(${clamped}px) scale(1.05)`;
+          });
+        },
+        { passive: true } as AddEventListenerOptions,
+      );
+    }
+
+    const indicators = document.querySelectorAll<HTMLElement>("[data-indicator]");
+    const sectionEls = document.querySelectorAll<HTMLElement>("section[id]");
+    const io = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]): void => {
+        entries.forEach((entry: IntersectionObserverEntry): void => {
+          if (entry.isIntersecting) {
+            const id: string = (entry.target as HTMLElement).id;
+            indicators.forEach((a: HTMLElement): void => {
+              const active: boolean = a.getAttribute("data-indicator") === id;
+              a.classList.toggle("bg-black", active);
+              a.classList.toggle("h-6", active);
+              a.classList.toggle("bg-neutral-400", !active);
+              a.setAttribute("aria-current", active ? "true" : "false");
+            });
+          }
+        });
+      },
+      { threshold: 0.6 },
+    );
+    sectionEls.forEach((s: HTMLElement): void => io.observe(s));
+  </script>
 </Layout>

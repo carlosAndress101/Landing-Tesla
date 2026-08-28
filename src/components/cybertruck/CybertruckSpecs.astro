@@ -1,0 +1,37 @@
+---
+import type { CybertruckSpec } from "../../types/cybertruck";
+
+interface Props {
+  readonly specs: readonly CybertruckSpec[];
+}
+const { specs }: Props = Astro.props;
+---
+
+<section id="cybertruck-specs" data-theme="light" class="landing-section snap-center relative w-screen bg-neutral-50 px-6 py-12 md:px-8 md:py-16">
+  <div class="mx-auto max-w-5xl">
+    <header class="reveal mb-8 text-center">
+      <h2 class="text-3xl font-bold tracking-tight md:text-5xl">Especificaciones</h2>
+      <p class="mt-2 text-sm opacity-60">Dos variantes confirmadas. Autonomía EPA est.</p>
+    </header>
+
+    <div class="reveal overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <div class="grid grid-cols-3 bg-black text-white text-sm">
+        <div class="px-4 py-3 font-medium opacity-60">Especificación</div>
+        <div class="px-4 py-3 text-center font-bold">Dual Motor AWD</div>
+        <div class="px-4 py-3 text-center font-bold">Cyberbeast</div>
+      </div>
+      {specs.map((row) => (
+        <div class="grid grid-cols-3 border-t border-neutral-200 text-sm">
+          <div class="px-4 py-4 font-medium">
+            {row.label}
+            {row.note && <span class="ml-1 text-xs opacity-40">{row.note}</span>}
+          </div>
+          <div class="px-4 py-4 text-center">{row.dual}</div>
+          <div class="px-4 py-4 text-center font-semibold">{row.beast}</div>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-4 text-center text-xs opacity-40">RWD 250 mi y Range Extender pendientes de verificación. Datos de tesla.com/es_co/cybertruck, dic 2024.</p>
+  </div>
+</section>

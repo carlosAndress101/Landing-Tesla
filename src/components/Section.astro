@@ -1,0 +1,107 @@
+---
+import Button from "./Button.astro";
+import type { TeslaSection } from "../types/section";
+import { isDarkTheme } from "../utils/helpers";
+import { THEME_BG } from "../utils/constants";
+
+interface Props extends TeslaSection {
+  readonly eager?: boolean;
+}
+
+const { id, title, subtitle, theme, media, actions = [], eager = false }: Props = Astro.props;
+const isDark = isDarkTheme(theme);
+---
+
+<section
+  id={id}
+  data-theme={theme}
+  class:list={[
+    "landing-section snap-center relative flex h-screen w-screen flex-col items-center overflow-hidden text-center",
+    THEME_BG[theme],
+  ]}
+>
+  <div class="absolute inset-0 z-0">
+    {
+      media.type === "video" ? (
+        <video
+          class="parallax-media h-full w-full object-cover object-center"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster={media.poster}
+          aria-hidden="true"
+        >
+          <source src={media.src} type="video/webm" />
+        </video>
+      ) : (
+        <img
+          class="parallax-media h-full w-full object-cover object-center"
+          src={media.src}
+          alt={media.alt ?? title}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          width="1920"
+          height="1080"
+        />
+      )
+    }
+    <div class:list={["absolute inset-0", isDark ? "bg-black/20" : "bg-black/5"]}></div>
+  </div>
+
+  <div class="relative z-10 flex h-full w-full flex-col">
+    <header class="reveal pt-36 md:pt-40">
+      <h2 class="text-[40px] font-medium tracking-tight">{title}</h2>
+      {subtitle && <p class="mt-1 text-sm underline-offset-4 hover:underline cursor-pointer">{subtitle}</p>}
+    </header>
+
+    <footer class="mt-auto flex flex-col items-center gap-4 pb-14 md:pb-20">
+      {
+        actions.length > 0 && (
+          <div class="reveal flex flex-col md:flex-row gap-3 md:gap-6" style="transition-delay:120ms">
+            {actions.map((a) => (
+              <Button label={a.label} href={a.href} variant={a.variant ?? "primary"} />
+            ))}
+          </div>
+        )
+      }
+      {
+        id === "hero" && (
+          <a
+            href="#model-y"
+            aria-label="Scroll to next section"
+            class="reveal mt-4 animate-bounce opacity-70 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full p-2"
+            style="transition-delay:250ms"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        )
+      }
+    </footer>
+  </div>
+</section>
+
+<style>
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 600ms ease, transform 600ms ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .parallax-media {
+      transform: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import type { CybertruckInteriorFeature } from "../../types/cybertruck";
+
+interface Props {
+  readonly items: readonly CybertruckInteriorFeature[];
+}
+const { items }: Props = Astro.props;
+---
+
+<section id="cybertruck-interior" data-theme="light" class="landing-section snap-center relative w-screen bg-white">
+  <div class="mx-auto max-w-7xl">
+    {items.map((item, idx) => (
+      <div class:list={["flex flex-col md:flex-row min-h-[70vh] items-center gap-0", idx % 2 === 1 ? "md:flex-row-reverse" : ""]}>
+        <div class="reveal w-full md:w-1/2">
+          <img
+            src={item.media.src}
+            alt={item.media.alt}
+            class="h-[50vh] w-full object-cover md:h-[70vh]"
+            loading="lazy"
+            decoding="async"
+            width="960"
+            height="700"
+          />
+        </div>
+        <div class="reveal flex w-full flex-col justify-center px-6 py-10 md:w-1/2 md:px-12 md:py-16" style="transition-delay:100ms">
+          <h3 class="text-2xl font-bold tracking-tight md:text-4xl">{item.title}</h3>
+          <p class="mt-4 max-w-xl text-sm leading-relaxed opacity-60 md:text-base">{item.description}</p>
+          <div class="mt-6 h-px w-12 bg-black/20"></div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

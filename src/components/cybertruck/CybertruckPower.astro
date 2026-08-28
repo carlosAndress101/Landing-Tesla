@@ -1,0 +1,39 @@
+---
+import type { CybertruckPowerFlow } from "../../types/cybertruck";
+
+interface Props {
+  readonly flows: readonly CybertruckPowerFlow[];
+}
+const { flows }: Props = Astro.props;
+---
+
+<section id="cybertruck-power" data-theme="dark" class="landing-section snap-center relative flex w-screen flex-col items-center justify-center bg-black px-6 py-16 text-white md:py-24">
+  <header class="reveal mb-10 text-center">
+    <h2 class="text-3xl font-bold tracking-tight md:text-5xl">Powershare</h2>
+    <p class="mt-3 max-w-2xl text-sm opacity-60">Tu Cybertruck es una central eléctrica sobre ruedas.</p>
+  </header>
+
+  <div class="reveal mx-auto flex w-full max-w-5xl flex-col items-center gap-4 md:flex-row md:justify-center">
+    {flows.map((f, i) => (
+      <div class="flex flex-col items-center gap-3 md:flex-row">
+        <div class="flex flex-col items-center rounded-2xl border border-white/15 bg-white/5 px-6 py-5 backdrop-blur">
+          <div class="text-xs uppercase tracking-widest opacity-60">{f.from}</div>
+          <div class="mt-2 text-lg font-semibold">{f.to}</div>
+          <div class="mt-1 text-xs opacity-60">{f.label}</div>
+        </div>
+        {i < flows.length - 1 && (
+          <div class="hidden md:block opacity-30" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+        )}
+        {i < flows.length - 1 && (
+          <div class="md:hidden opacity-30" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 13l7 7 7-7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <p class="reveal mt-8 text-center text-xs opacity-40" style="transition-delay:120ms">*Con equipamiento Powershare y instalación certificada. Consulta disponibilidad local.</p>
+</section>

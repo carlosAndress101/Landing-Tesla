@@ -1,0 +1,17 @@
+---
+interface Props {
+  readonly title: string;
+  readonly subtitle: string;
+  readonly media: { readonly src: string; readonly alt: string };
+}
+const { title, subtitle, media }: Props = Astro.props;
+---
+
+<section id="cybertruck-offroad" data-theme="dark" class="landing-section snap-center relative flex h-[100svh] w-screen flex-col items-center justify-center overflow-hidden bg-black text-white">
+  <img src={media.src} alt={media.alt} class="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" decoding="async" width="1920" height="1080" />
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/20"></div>
+  <div class="relative z-10 px-6 text-center">
+    <h2 class="reveal text-4xl font-black tracking-[-0.03em] md:text-6xl">{title}</h2>
+    <p class="reveal mt-4 max-w-2xl text-sm opacity-80 md:text-base" style="transition-delay:80ms">{subtitle}</p>
+  </div>
+</section>

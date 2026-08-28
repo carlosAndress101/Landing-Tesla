@@ -1,0 +1,9 @@
+---
+const links = ["Tesla © 2026", "Privacy & Legal", "Vehicle Recalls", "Contact", "News", "Get Updates", "Locations"] as const;
+---
+
+<footer class="w-full flex flex-wrap justify-center gap-x-6 gap-y-2 py-6 text-xs text-neutral-500 bg-white">
+  {links.map((l: string) => (
+    <a href="#" class="rounded px-1 hover:text-neutral-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black">{l}</a>
+  ))}
+</footer>
