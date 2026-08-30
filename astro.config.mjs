@@ -3,7 +3,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://tesla-landing.example.com",
+  site: "https://landingtesla.yamidev.com",
   output: "static",
   integrations: [tailwind()],
   image: {
